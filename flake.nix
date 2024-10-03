@@ -13,6 +13,8 @@
       url = "github:nix-community/nix4nvchad";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ags.url = "github:Aylur/ags";
+    mcmojave-hyprcursor.url = "github:libadoxon/mcmojave-hyprcursor";
 #    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
 
@@ -29,7 +31,7 @@
 #        specialArgs = { inherit inputs; };
         inherit specialArgs;
         modules = [
-          ./configuration.nix
+          ./nixos/configuration.nix
 
 #          inherit specialArgs;
 
@@ -54,18 +56,12 @@
       };
       homeConfigurations = {
         timofey = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-          ./home.nix
 
-#          {
-#          wayland.windowManager.hyprland = {
-#            enable = true;
-#            # set the flake package
-#            package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-#          };
-#        } 
-        ];
+          inherit pkgs;
+
+          extraSpecialArgs = { inherit inputs; };
+
+          modules = [ ./home-manager/home.nix ];
         };
       };
     };
