@@ -1,0 +1,82 @@
+{
+  description = "My NixOS setup flake";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    aagl.url = "github:ezKEa/aagl-gtk-on-nix";
+    aagl.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+     # The `follows` keyword in inputs is used for inheritance.
+      # Here, `inputs.nixpkgs` of home-manager is kept consistent with
+      # the `inputs.nixpkgs` of the current flake,
+      # to avoid problems caused by different versions of nixpkgs.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ags.url = "github:Aylur/ags";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+
+#    nix-comfyui.url = "github:dyscorv/nix-comfyui";
+  };
+
+  outputs = {self, nixpkgs, home-manager, aagl, hyprpanel, ...}@inputs:
+  let
+    lib = nixpkgs.lib;
+    system = "x86_64-linux";
+  in { 
+    nixosConfigurations = {
+      nixos = lib.nixosSystem {
+        inherit system;
+	pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            inputs.hyprpanel.overlay
+#	    inputs.nix-comfyui.overlays.default
+          ];
+	  config = {
+	    allowUnfree = true;
+	  };
+        };
+        specialArgs = {inherit inputs; inherit system;};
+        modules = [ 
+        ./essentials/configuration.nix 
+        ./apps/games/aagl/anime-games.nix
+        ./apps/games/launchers.nix
+        ./apps/casual/organization.nix
+	./apps/work/files.nix
+	./apps/work/code.nix
+        ./apps/network.nix
+        inputs.nixvim.nixosModules.nixvim
+        ./configs/neovim/nvim.nix
+	./apps/casual/hyprpanel.nix
+	./apps/wine.nix
+	./apps/games/vr.nix
+	./window-managers/window-managers.nix
+#	./apps/ai.nix
+        ];
+      };
+    };
+    homeConfigurations = {
+      timofey = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs { inherit system; };
+      extraSpecialArgs = { inherit inputs; };
+      modules = [
+        ./configs/home-manager/home.nix 
+	./configs/home-manager/terminal.nix
+	./window-managers/config/sway.nix
+#	inputs.homeManagerModules.nixvim
+#	inputs.nixvim
+#	./configs/neovim/nvim.nix
+      ];
+        };
+      };
+  };
+}
+
