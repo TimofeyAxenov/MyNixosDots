@@ -13,10 +13,12 @@
   programs.nixvim = {
     enable = true;
     plugins = {
+      render-markdown.enable = true;
       lsp = {
         enable = true;
 
 	servers = {
+	  marksman.enable = true;
 	  gopls.enable = true;
 	  pyright.enable = true;
 	  nil_ls = {
