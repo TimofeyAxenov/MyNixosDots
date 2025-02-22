@@ -67,8 +67,8 @@
 	./apps/wine.nix
 	./apps/games/vr.nix
 	./window-managers/window-managers.nix
-	inputs.spicetify-nix.nixosModules.default
-	./configs/spotify.nix
+#	inputs.spicetify-nix.nixosModules.default
+#	./configs/spotify.nix
 #	./apps/ai.nix
         ];
       };

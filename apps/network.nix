@@ -3,14 +3,15 @@
 {
 
     virtualisation.waydroid.enable = true;
-    environment.systemPackages = with pkgs; [
-    qbittorrent
-    tor
-    tor-browser
-    tauon
-    mozillavpn
-    nur.repos.ataraxiasjel.waydroid-script
-    spotify
+    environment.systemPackages = [
+    pkgs.qbittorrent
+    pkgs.tor
+    pkgs.tor-browser
+    pkgs.tauon
+    pkgs.mozillavpn
+    pkgs.nur.repos.ataraxiasjel.waydroid-script
+    pkgs.spotify
+#    config.programs.spicetify.spicedSpotify
 #    nym
     ];
   }
