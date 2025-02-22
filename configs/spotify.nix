@@ -1,17 +1,21 @@
 {pkgs, inputs, ...}:
 
-{
-  programs.spicetify = 
-  let
-    spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-  in
-  {
-    enable = true;
-    theme = spicePkgs.themes.gruvbox-material-dark;
+let
+   # For Flakeless:
+   # spicePkgs = spicetify-nix.packages;
+   # With flakes:
+   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.system};
+in
 
-    enabledExtensions = with spicePkgs.extensions; [
-      adblock
-      shuffle
-    ];
-  };
+{
+   programs.spicetify = {
+     enable = true;
+     enabledExtensions = with spicePkgs.extensions; [
+       adblockify
+       hidePodcasts
+       shuffle # shuffle+ (special characters are sanitized out of extension names)
+     ];
+     theme = spicePkgs.themes.catppuccin;
+     colorScheme = "mocha";
+   };
 }

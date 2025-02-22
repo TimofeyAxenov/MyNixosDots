@@ -10,7 +10,7 @@
     tauon
     mozillavpn
     nur.repos.ataraxiasjel.waydroid-script
-#    spotify
+    spotify
 #    nym
     ];
   }
