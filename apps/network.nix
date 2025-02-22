@@ -8,6 +8,9 @@
     tor
     tor-browser
     tauon
+    mozillavpn
+    nur.repos.ataraxiasjel.waydroid-script
+#    spotify
 #    nym
     ];
   }

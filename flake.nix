@@ -20,6 +20,13 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
@@ -38,6 +45,7 @@
           inherit system;
           overlays = [
             inputs.hyprpanel.overlay
+	    inputs.nur.overlays.default
 #	    inputs.nix-comfyui.overlays.default
           ];
 	  config = {
@@ -59,6 +67,8 @@
 	./apps/wine.nix
 	./apps/games/vr.nix
 	./window-managers/window-managers.nix
+	inputs.spicetify-nix.nixosModules.default
+	./configs/spotify.nix
 #	./apps/ai.nix
         ];
       };
