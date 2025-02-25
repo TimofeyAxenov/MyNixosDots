@@ -8,7 +8,7 @@
     aagl.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager";
      # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with
       # the `inputs.nixpkgs` of the current flake,
@@ -50,6 +50,11 @@
           ];
 	  config = {
 	    allowUnfree = true;
+	    allowUnfreePredicate =
+              pkg:
+              builtins.elem (nixpkgs.lib.getName pkg) [
+                "spotify"
+              ];
 	  };
         };
         specialArgs = {inherit inputs; inherit system;};
@@ -79,23 +84,6 @@
         ./configs/home-manager/home.nix 
 	./configs/home-manager/terminal.nix
 	./window-managers/config/sway.nix
-	spicetify-nix.homeManagerModules.default
-          {
-            # required options
-            home = {
-              username = "timofey";
-              homeDirectory = "/home/timofey";
-              stateVersion = "24.05";
-            };
-            programs.home-manager.enable = true;
-
-            nixpkgs.config.allowUnfreePredicate =
-              pkg:
-              builtins.elem (nixpkgs.lib.getName pkg) [
-                "spotify"
-              ];
-          }
-#	inputs.homeManagerModules.nixvim
 #	inputs.nixvim
 #	./configs/neovim/nvim.nix
       ];

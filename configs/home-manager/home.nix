@@ -2,20 +2,24 @@
 
 {
 
-  imports = [ inputs.ags.homeManagerModules.default ];
-  programs.ags = {
-    enable = true;
+  imports = [
+    inputs.spicetify-nix.homeManagerModules.default
+    ./spicetify
+  ];
+
+#  programs.ags = {
+#    enable = true;
 
     # null or path, leave as null if you don't want hm to manage the config
-    configDir = ../ags;
+#    configDir = ../ags;
 
     # additional packages to add to gjs's runtime
-    extraPackages = with pkgs; [
-      gtksourceview
-      webkitgtk
-      accountsservice
-    ];
-  };
+#    extraPackages = with pkgs; [
+#      gtksourceview
+#      webkitgtk
+#      accountsservice
+#    ];
+#  };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "timofey";
