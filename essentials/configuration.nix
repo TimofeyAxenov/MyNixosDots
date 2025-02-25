@@ -9,8 +9,8 @@
       ./hardware-configuration.nix
       ./cachix.nix
       ./drivers/amd.nix
-      ./spicetify
-      inputs.spicetify-nix.homeManagerModules.default
+#      ./spicetify
+#      inputs.spicetify-nix.nixosModules.default
     ];
 
   # Bootloader.

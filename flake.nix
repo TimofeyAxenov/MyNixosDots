@@ -33,7 +33,7 @@
 #    nix-comfyui.url = "github:dyscorv/nix-comfyui";
   };
 
-  outputs = {self, nixpkgs, home-manager, aagl, hyprpanel, ...}@inputs:
+  outputs = {self, nixpkgs, home-manager, aagl, hyprpanel, spicetify-nix, ...}@inputs:
   let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
@@ -67,20 +67,34 @@
 	./apps/wine.nix
 	./apps/games/vr.nix
 	./window-managers/window-managers.nix
-#	inputs.spicetify-nix.nixosModules.default
-#	./configs/spotify.nix
 #	./apps/ai.nix
         ];
       };
     };
     homeConfigurations = {
       timofey = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
       extraSpecialArgs = { inherit inputs; };
       modules = [
         ./configs/home-manager/home.nix 
 	./configs/home-manager/terminal.nix
 	./window-managers/config/sway.nix
+	spicetify-nix.homeManagerModules.default
+          {
+            # required options
+            home = {
+              username = "timofey";
+              homeDirectory = "/home/timofey";
+              stateVersion = "24.05";
+            };
+            programs.home-manager.enable = true;
+
+            nixpkgs.config.allowUnfreePredicate =
+              pkg:
+              builtins.elem (nixpkgs.lib.getName pkg) [
+                "spotify"
+              ];
+          }
 #	inputs.homeManagerModules.nixvim
 #	inputs.nixvim
 #	./configs/neovim/nvim.nix
