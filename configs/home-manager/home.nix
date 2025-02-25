@@ -2,10 +2,6 @@
 
 {
 
-  imports = [
-    inputs.spicetify-nix.homeManagerModules.default
-    ./spicetify
-  ];
 
 #  programs.ags = {
 #    enable = true;

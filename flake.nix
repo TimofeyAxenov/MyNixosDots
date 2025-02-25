@@ -7,14 +7,6 @@
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     aagl.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-     # The `follows` keyword in inputs is used for inheritance.
-      # Here, `inputs.nixpkgs` of home-manager is kept consistent with
-      # the `inputs.nixpkgs` of the current flake,
-      # to avoid problems caused by different versions of nixpkgs.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     ags.url = "github:Aylur/ags";
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -24,9 +16,14 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
@@ -84,6 +81,17 @@
         ./configs/home-manager/home.nix 
 	./configs/home-manager/terminal.nix
 	./window-managers/config/sway.nix
+	spicetify-nix.homeManagerModules.default
+          {
+            # spicetify
+            programs.spicetify.enable = true;
+
+            nixpkgs.config.allowUnfreePredicate =
+              pkg:
+              builtins.elem (nixpkgs.lib.getName pkg) [
+                "spotify"
+              ];
+          }
 #	inputs.nixvim
 #	./configs/neovim/nvim.nix
       ];
