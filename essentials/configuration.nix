@@ -236,7 +236,8 @@
   programs.seahorse.enable = true;
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    nerd-fonts.jetbrainsmono
+#    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     times-newer-roman
     corefonts
     vistafonts
