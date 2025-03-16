@@ -158,22 +158,22 @@
   environment.systemPackages = with pkgs; [
   telegram-desktop
   neovim
-  davinci-resolve
-  gimp
+#  davinci-resolve
+#  gimp
   git
   kitty
   go
   python3
-  wofi
-  hyprpaper
-  hyprcursor
-  nerdfonts
+#  wofi
+#  hyprpaper
+#  hyprcursor
+#  nerdfonts
   zig
   gcc
   unzip
   nodejs
   pywal
-  google-chrome
+#  google-chrome
 #  pgadmin4-desktopmode
 #  helix
 #  zellij
@@ -184,30 +184,30 @@
   ripgrep
   fd
   tipp10
-  hyprshot
+#  hyprshot
   gparted
-  element-desktop
-  syncthing
-  syncthingtray
+#  element-desktop
+#  syncthing
+#  syncthingtray
   xfce.thunar
 #  pgadmin4-desktopmode
-  python312Packages.flask
-  python312Packages.flask-mail
-  python312Packages.flask-security
-  python312Packages.setuptools
-  python312Packages.pip
-  pgadmin4-desktopmode
-  python312Packages.passlib
+#  python312Packages.flask
+#  python312Packages.flask-mail
+#  python312Packages.flask-security
+#  python312Packages.setuptools
+#  python312Packages.pip
+#  pgadmin4-desktopmode
+#  python312Packages.passlib
   zsh
-  activate-linux
+#  activate-linux
   gnome-tweaks
   ocs-url
   cargo
   nixos-generators
   android-tools
-  wezterm
-  temurin-jre-bin
-  temurin-bin
+#  wezterm
+#  temurin-jre-bin
+#  temurin-bin
 #  clinfo
   jdk
   prismlauncher
@@ -216,10 +216,10 @@
   spotify
   avahi
   cmake
-  distrobox
-  python312Packages.zstd
+#  distrobox
+#  python312Packages.zstd
   libgcc
-  radarr
+#  radarr
   glog
   gnutls
   libmicrohttpd
@@ -227,16 +227,20 @@
   ghc
   shellcheck
   libsecret
-
+  protontricks
+  comic-mandown
+  _7zz
 #  bitwarden-cli
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+  wget
+  gimp
+  tailscale
   ];
 
   programs.seahorse.enable = true;
 
   fonts.packages = with pkgs; [
-    nerd-fonts.jetbrainsmono
+    nerd-fonts.jetbrains-mono
 #    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     times-newer-roman
     corefonts

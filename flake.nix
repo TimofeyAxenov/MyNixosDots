@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix = {
@@ -27,10 +27,15 @@
 
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 #    nix-comfyui.url = "github:dyscorv/nix-comfyui";
   };
 
-  outputs = {self, nixpkgs, home-manager, aagl, hyprpanel, spicetify-nix, ...}@inputs:
+  outputs = {self, nixpkgs, home-manager, aagl, hyprpanel, spicetify-nix, nvf, nixvim, ...}@inputs:
   let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
@@ -63,12 +68,15 @@
 	./apps/work/files.nix
 	./apps/work/code.nix
         ./apps/network.nix
-        inputs.nixvim.nixosModules.nixvim
-        ./configs/neovim/nvim.nix
-	./apps/casual/hyprpanel.nix
+#	nixvim.nixosModules.nixvim
+	nvf.nixosModules.default
+        ./configs/neovim/nvf.nix
+#	./apps/casual/hyprpanel.nix
 	./apps/wine.nix
 	./apps/games/vr.nix
 	./window-managers/window-managers.nix
+	spicetify-nix.nixosModules.default
+	./configs/spotify.nix
 #	./apps/ai.nix
         ];
       };
@@ -81,17 +89,18 @@
         ./configs/home-manager/home.nix 
 	./configs/home-manager/terminal.nix
 	./window-managers/config/sway.nix
-	spicetify-nix.homeManagerModules.default
-          {
+#	spicetify-nix.homeManagerModules.default
+#          {
             # spicetify
-            programs.spicetify.enable = true;
+#            programs.spicetify.enable = true;
+#	    programs.spicetufy.
 
-            nixpkgs.config.allowUnfreePredicate =
-              pkg:
-              builtins.elem (nixpkgs.lib.getName pkg) [
-                "spotify"
-              ];
-          }
+#            nixpkgs.config.allowUnfreePredicate =
+#              pkg:
+#              builtins.elem (nixpkgs.lib.getName pkg) [
+#                "spotify"
+#              ];
+#          }
 #	inputs.nixvim
 #	./configs/neovim/nvim.nix
       ];

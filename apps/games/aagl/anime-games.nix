@@ -17,23 +17,23 @@ in
   #  package = inputs.aagl.packages.x86_64-linux.honkers-railway-launcher; # for flakes
   };
 
-  programs.honkers-launcher = {
-    enable = true;
+#  programs.honkers-launcher = {
+#    enable = true;
   #  package = inputs.aagl.packages.x86_64-linux.honkers-launcher; # for flakes
-  };
+#  };
 
-  programs.anime-game-launcher = {
-    enable = true;
+#  programs.anime-game-launcher = {
+#    enable = true;
   #  package = inputs.aagl.packages.x86_64-linux.anime-game-launcher; # for flakes
-  };
+#  };
 
-  programs.wavey-launcher = {
-    enable = true;
+ # programs.wavey-launcher = {
+ #   enable = true;
   #  package = inputs.aagl.packages.x86_64-linux.wavey-launcher; # for flakes
-  };
+ # };
 
-  programs.sleepy-launcher = {
-    enable = true;
+#  programs.sleepy-launcher = {
+#    enable = true;
   #  package = inputs.aagl.packages.x86_64-linux.sleepy-launcher; # for flakes
-  };
+#  };
 }
