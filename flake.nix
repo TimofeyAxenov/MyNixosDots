@@ -4,6 +4,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    minegrub-world-sel-theme.url = "github:Lxtharia/minegrub-world-sel-theme";
+
+    minesddm = {
+      url = "github:Davi-S/sddm-theme-minesddm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     aagl.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -77,7 +84,9 @@
 	./window-managers/window-managers.nix
 	spicetify-nix.nixosModules.default
 	./configs/spotify.nix
+        ./apps/ctf.nix
 #	./apps/ai.nix
+        inputs.minegrub-world-sel-theme.nixosModules.default
         ];
       };
     };

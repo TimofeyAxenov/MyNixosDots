@@ -8,5 +8,6 @@
     jellyfin
     davinci-resolve
     libreoffice
+    audacity
   ];
 }

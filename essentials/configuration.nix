@@ -29,6 +29,20 @@
   boot.loader.grub.device = "nodev";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiSupport = true;
+  boot.loader.grub.minegrub-world-sel = {
+    enable = true;
+    customIcons = [{
+        name = "nixos";
+        lineTop = "NixOS (23/11/2023, 23:03)";
+        lineBottom = "Survival Mode, No Cheats, Version: 23.11";
+        # Icon: you can use an icon from the remote repo, or load from a local file
+        imgName = "nixos";
+        # customImg = builtins.path {
+        #   path = ./nixos-logo.png;
+        #   name = "nixos-img";
+        # };
+      }];
+  };
 #  boot.loader.grub.efiInstallAsRemovable = true;
 
 #  boot = {
@@ -233,8 +247,14 @@
 #  bitwarden-cli
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   wget
-  gimp
-  tailscale
+  icu.dev
+  skia
+  dotnetPackages.Nuget
+  dwarfs
+  fuse-overlayfs
+  conan
+  libxcrypt
+  python312Packages.cmake
   ];
 
   programs.seahorse.enable = true;
@@ -246,6 +266,8 @@
     corefonts
     vistafonts
   ];
+
+  services.tailscale.enable = true;
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
@@ -269,10 +291,10 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 5353 9757 ];
+  networking.firewall.allowedTCPPorts = [ 5353 9757 22 ];
   networking.firewall.allowedUDPPorts = [ 9757 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

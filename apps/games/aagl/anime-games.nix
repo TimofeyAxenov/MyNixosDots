@@ -32,8 +32,8 @@ in
   #  package = inputs.aagl.packages.x86_64-linux.wavey-launcher; # for flakes
  # };
 
-#  programs.sleepy-launcher = {
-#    enable = true;
-  #  package = inputs.aagl.packages.x86_64-linux.sleepy-launcher; # for flakes
-#  };
+  programs.sleepy-launcher = {
+    enable = true;
+    package = inputs.aagl.packages.x86_64-linux.sleepy-launcher; # for flakes
+  };
 }

@@ -9,6 +9,7 @@
     buf
     rpi-imager
     mqttx
+    netcat
 #    jetbrains.pycharm-professional
 #    jetbrains.goland
 #    jetbrains.clion
