@@ -6,19 +6,19 @@
 
     minegrub-world-sel-theme.url = "github:Lxtharia/minegrub-world-sel-theme";
 
-    minesddm = {
-      url = "github:Davi-S/sddm-theme-minesddm";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+#    minesddm = {
+ #     url = "github:Davi-S/sddm-theme-minesddm";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
 
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     aagl.inputs.nixpkgs.follows = "nixpkgs";
 
-    ags.url = "github:Aylur/ags";
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+#    ags.url = "github:Aylur/ags";
+#    nixvim = {
+#      url = "github:nix-community/nixvim";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,7 +32,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+#    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
     nvf = {
       url = "github:notashelf/nvf";
@@ -42,7 +42,7 @@
 #    nix-comfyui.url = "github:dyscorv/nix-comfyui";
   };
 
-  outputs = {self, nixpkgs, home-manager, aagl, hyprpanel, spicetify-nix, nvf, nixvim, ...}@inputs:
+  outputs = {self, nixpkgs, home-manager, aagl, spicetify-nix, nvf, ...}@inputs:
   let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
@@ -53,7 +53,7 @@
 	pkgs = import nixpkgs {
           inherit system;
           overlays = [
-            inputs.hyprpanel.overlay
+#            inputs.hyprpanel.overlay
 	    inputs.nur.overlays.default
 #	    inputs.nix-comfyui.overlays.default
           ];
@@ -78,15 +78,17 @@
 #	nixvim.nixosModules.nixvim
 	nvf.nixosModules.default
         ./configs/neovim/nvf.nix
-#	./apps/casual/hyprpanel.nix
+#        ./apps/casual/hyprpanel.nix
 	./apps/wine.nix
 	./apps/games/vr.nix
 	./window-managers/window-managers.nix
 	spicetify-nix.nixosModules.default
 	./configs/spotify.nix
-        ./apps/ctf.nix
+       ./apps/ctf.nix
 #	./apps/ai.nix
         inputs.minegrub-world-sel-theme.nixosModules.default
+ #       inputs.minesddm.nixosModules.default
+        ./configs/sddm.nix
         ];
       };
     };

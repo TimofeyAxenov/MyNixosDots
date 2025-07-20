@@ -43,6 +43,35 @@
         # };
       }];
   };
+
+  systemd.user.services.peacock = {
+  enable = true;
+  path = [ pkgs.bash pkgs.coreutils pkgs.curl pkgs.nodejs ];
+  description = "Peacock";
+  script = ''
+    #!/usr/bin/env bash
+    exec ${pkgs.bash}/bin/bash /home/timofey/linux-steam-setup/start.sh
+  '';
+  serviceConfig = {
+    WorkingDirectory = "/home/timofey/linux-steam-setup";
+    # Additional service config options can go here
+  };
+  wantedBy = ["default.target"];
+};
+
+systemd.services.zapret = {
+  enable = true;
+  description = "Zapret traffic control tool";
+  wantedBy = [ "multi-user.target" ]; # Start on boot
+  after = [ "network.target" ]; # Ensure network is ready
+  serviceConfig = {
+    ExecStart = "/opt/zapret/init.d/sysv/zapret start";
+    ExecStop = "/opt/zapret/init.d/sysv/zapret stop";
+    Type = "forking"; # Since it's a SysV-style init script
+    Restart = "on-failure";
+    # Run as root (no sudo needed, systemd handles permissions)
+  };
+};
 #  boot.loader.grub.efiInstallAsRemovable = true;
 
 #  boot = {
@@ -59,7 +88,7 @@
 #  };
 
   networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+#  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -67,6 +96,26 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+#  networking.wireless = { 
+#  enable = true; 
+#  userControlled.enable = true; 
+#  networks = { 
+#    SkyLine = { 
+#      psk = "timoshka$15$07$2008"; 
+#      };
+#    SkyLine_Wi-Fi5 = {
+#      psk = "timoshka$15$07$2008";
+#      }; 
+#    AccessPoint = {
+#      psk = "NewPassword";
+#       };
+#    }; 
+#  };
+
+   hardware.bluetooth.enable = true;
+   hardware.bluetooth.powerOnBoot = true;
+
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
@@ -91,8 +140,12 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.sddm = {
+    enable = true;
+    theme = "catppuccin-mocha";
+#    package = pkgs.kdePackages.sddm;
+  };
+  services.xserver.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -153,15 +206,15 @@
 
 #  nixpkgs.config.allowUnsupportedSystem = true;
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-        user = "timofey";
-      };
-    };
-  };
+#  services.greetd = {
+#    enable = true;
+#    settings = {
+#      default_session = {
+#        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+#        user = "timofey";
+#      };
+#    };
+#  };
 
   services.flatpak.enable = true;
 
@@ -255,9 +308,10 @@
   conan
   libxcrypt
   python312Packages.cmake
+  anydesk
+  bc
+  teamspeak6-client
   ];
-
-  programs.seahorse.enable = true;
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono

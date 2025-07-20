@@ -10,5 +10,10 @@
   osu-lazer-bin
   modrinth-app
   lunar-client
+  umu-launcher
+  moonlight-qt
+  sunshine
+  satisfactorymodmanager
+  scarab
   ];
 }

@@ -8,5 +8,7 @@
     sqlmap
     wireshark
     pwntools
+    exiftool
+    zsteg
   ];
 }

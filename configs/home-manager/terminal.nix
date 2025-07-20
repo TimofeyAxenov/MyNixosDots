@@ -14,6 +14,7 @@
       ll = "ls -l";
       system_update = "sudo nixos-rebuild switch --flake /home/timofey/.dotfiles --impure";
       home_update = "home-manager switch --flake /home/timofey/.dotfiles";
+      start_zapret = "sudo /opt/zapret/init.d/sysv/zapret start";
     };
 
     oh-my-zsh = {
