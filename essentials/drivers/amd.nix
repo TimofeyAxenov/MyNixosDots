@@ -4,17 +4,27 @@
 
   boot.initrd.kernelModules = [ "amdgpu" ];
 
-  hardware.graphics = {
-    enable = true;
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
 
-    enable32Bit = true;
+    amdgpu.amdvlk = {
+      enable = true;
+      support32Bit.enable = true;
+    };
   };
 
-  hardware.opengl.extraPackages = with pkgs; [
-    rocmPackages.clr.icd
-  ];
+#  hardware.opengl.extraPackages = with pkgs; [
+#    rocmPackages.clr.icd
+#  ];
 
   services.xserver.videoDrivers = ["amdgpu"];
+
+  environment.sessionVariables = {
+    XR_RUNTIME_PATH = "/run/opengl-driver/share/openxr/1/openxr-loader.json";
+  };
 
   boot.kernelPatches = [
     {

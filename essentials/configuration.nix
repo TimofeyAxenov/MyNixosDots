@@ -44,6 +44,14 @@
       }];
   };
 
+  services.xserver.config = ''
+    Section "Device"
+      Identifier "Device0"
+      Driver "modesetting"
+      Option "DRI" "3"
+    EndSection
+  '';
+
   systemd.user.services.peacock = {
   enable = true;
   path = [ pkgs.bash pkgs.coreutils pkgs.curl pkgs.nodejs ];
@@ -59,19 +67,21 @@
   wantedBy = ["default.target"];
 };
 
-systemd.services.zapret = {
-  enable = true;
-  description = "Zapret traffic control tool";
-  wantedBy = [ "multi-user.target" ]; # Start on boot
-  after = [ "network.target" ]; # Ensure network is ready
-  serviceConfig = {
-    ExecStart = "/opt/zapret/init.d/sysv/zapret start";
-    ExecStop = "/opt/zapret/init.d/sysv/zapret stop";
-    Type = "forking"; # Since it's a SysV-style init script
-    Restart = "on-failure";
+#systemd.services.zapret = {
+#  enable = true;
+#  description = "Zapret traffic control tool";
+#  wantedBy = [ "multi-user.target" ]; # Start on boot
+#  after = [ "network.target" ]; # Ensure network is ready
+#  serviceConfig = {
+#    ExecStart = "/opt/zapret/init.d/sysv/zapret start";
+#    ExecStop = "/opt/zapret/init.d/sysv/zapret stop";
+#    Type = "forking"; # Since it's a SysV-style init script
+#    Restart = "on-failure";
     # Run as root (no sudo needed, systemd handles permissions)
-  };
-};
+#  };
+#};
+  
+
 #  boot.loader.grub.efiInstallAsRemovable = true;
 
 #  boot = {
@@ -170,18 +180,35 @@ systemd.services.zapret = {
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+   services.pipewire = {
+     enable = true;
+     alsa.enable = true;
+     alsa.support32Bit = true;
+     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
-  };
+   };
+#  services.mpd = {
+#    enable = true;
+#    musicDirectory = "/home/timofey/Music";
+#    extraConfig = ''
+#      audio_output {
+#        type "pipewire"
+#        name "PipeWire Output"
+#      }
+#    '';
+#  };
+
+#  programs.ncmpcpp = {
+#    enable = true;
+#    mpdMusicDir = "/home/timofey/Music";
+#  };
+
+  
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -311,7 +338,25 @@ systemd.services.zapret = {
   anydesk
   bc
   teamspeak6-client
+  alacritty
+  xdg-desktop-portal-gtk
+  xdg-desktop-portal-gnome
+  gnome-keyring
+  waybar
+  xwayland-satellite
+  mako
+  ncmpcpp
+  mumble
+  murmur
+#  linuxKernel.packages.linux_zen.amneziawg
+#  amneziawg-go
+#  amneziawg-tools
+  appimage-run
   ];
+
+  programs.amnezia-vpn.enable = true;
+
+  programs.hyprlock.enable = true;
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
@@ -342,13 +387,21 @@ systemd.services.zapret = {
   #   enableSSHSupport = true;
   # };
 
+#  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelModules = [ ];  # Ensure no KVM modules are loaded by default
+  boot.extraModprobeConfig = ''
+    blacklist kvm
+    blacklist kvm_amd
+  '';
+#  boot.extraModulePackages = with config.boot.kernelPackages; [amneziawg];
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 5353 9757 22 ];
+  networking.firewall.allowedTCPPorts = [ 5353 9757 22 59100 59200 59716 ];
   networking.firewall.allowedUDPPorts = [ 9757 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

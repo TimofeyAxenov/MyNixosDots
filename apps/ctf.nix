@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     ghidra
     gdb
-    burpsuite
+#    burpsuite
     sqlmap
     wireshark
     pwntools

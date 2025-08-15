@@ -14,6 +14,11 @@
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     aagl.inputs.nixpkgs.follows = "nixpkgs";
 
+#    astal = {
+#      url = "github:aylur/astal";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
+
 #    ags.url = "github:Aylur/ags";
 #    nixvim = {
 #      url = "github:nix-community/nixvim";
@@ -68,8 +73,8 @@
         };
         specialArgs = {inherit inputs; inherit system;};
         modules = [ 
-        ./essentials/configuration.nix 
-        ./apps/games/aagl/anime-games.nix
+       ./essentials/configuration.nix 
+##        ./apps/games/aagl/anime-games.nix
         ./apps/games/launchers.nix
         ./apps/casual/organization.nix
 	./apps/work/files.nix

@@ -15,6 +15,7 @@
       system_update = "sudo nixos-rebuild switch --flake /home/timofey/.dotfiles --impure";
       home_update = "home-manager switch --flake /home/timofey/.dotfiles";
       start_zapret = "sudo /opt/zapret/init.d/sysv/zapret start";
+      archipelago = "appimage-run /home/timofey/Tools/Archipelago_0.6.3_linux-x86_64.AppImage";
     };
 
     oh-my-zsh = {
